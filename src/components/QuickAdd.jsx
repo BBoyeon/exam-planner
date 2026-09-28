@@ -1,3 +1,4 @@
+import { ASSIGNMENT_ID } from '../utils/categories';
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import Modal from './Modal';
@@ -7,7 +8,7 @@ export function TodoForm({ subjects, initial, onSave, onClose }) {
   const change = e => setForm({ ...form, [e.target.name]: e.target.value });
   return <form onSubmit={e => { e.preventDefault(); if (form.text.trim()) onSave({ ...form, text: form.text.trim() }); }}>
     <label>할 일<input name="text" placeholder="무엇을 공부할까요?" value={form.text} onChange={change} required maxLength={1000} autoFocus /></label>
-    <div className="form-grid"><label>날짜<input type="date" name="date" value={form.date} onChange={change} min="1900-01-01" max="9999-12-31" required /></label><label>관련 과목<select name="subjectId" value={form.subjectId} onChange={change}><option value="">과목 없음</option>{subjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}</select></label></div>
+    <div className="form-grid"><label>날짜<input type="date" name="date" value={form.date} onChange={change} min="1900-01-01" max="9999-12-31" required /></label><label>관련 과목<select name="subjectId" value={form.subjectId} onChange={change}><option value="">과목 없음</option><option value={ASSIGNMENT_ID}>과제</option>{subjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}</select></label></div>
     <div className="form-actions"><button type="button" className="btn" onClick={onClose}>취소</button><button className="btn primary" type="submit">{initial?.id ? '수정 저장' : 'Todo 추가'}</button></div>
   </form>;
 }

@@ -1,3 +1,4 @@
+import { ASSIGNMENT_ID } from './categories.js';
 import { validDate } from './dates.js';
 export const STORAGE_KEY = 'exam-planner:v1';
 export const emptyData = () => ({ version: 1, periods: [] });
@@ -17,7 +18,7 @@ export function validateData(data) {
     checkId(p.id);
     if (!Array.isArray(p.subjects) || !Array.isArray(p.todos) || !Array.isArray(p.events)) fail();
     const subjectIds = new Set(p.subjects.map(s => s?.id));
-    const related = id => id === '' || subjectIds.has(id);
+    const related = id => id === '' || id === ASSIGNMENT_ID || subjectIds.has(id);
     for (const s of p.subjects) {
       if (!s || !required(s.name) || !validDate(s.examDate) || !/^#[0-9a-fA-F]{6}$/.test(s.color) || !isText(s.scope)) fail();
       checkId(s.id);
